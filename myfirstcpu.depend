@@ -1,0 +1,19 @@
+# depslib dependency file v1.0
+1777231613 source:c:\users\davi\documents\000 - faculdade\1° período\laboratório de programação\estudando\myfirstcpu\main.c
+	<stdio.h>
+	<stdlib.h>
+	"cpu.h"
+	"memoria.h"
+
+1777216970 source:c:\users\davi\documents\000 - faculdade\1° período\laboratório de programação\estudando\myfirstcpu\cpu.c
+	<stdlib.h>
+	"cpu.h"
+	"memoria.h"
+
+1777229515 c:\users\davi\documents\000 - faculdade\1° período\laboratório de programação\estudando\myfirstcpu\cpu.h
+	"memoria.h"
+
+1777251253 c:\users\davi\documents\000 - faculdade\1° período\laboratório de programação\estudando\myfirstcpu\memoria.h
+
+1777217565 source:c:\users\davi\documents\000 - faculdade\1° período\laboratório de programação\estudando\myfirstcpu\instrucoes.c
+
