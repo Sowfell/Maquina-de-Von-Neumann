@@ -1,6 +1,10 @@
 #ifndef INSTRUCOES_H
 #define INSTRUCOES_H
 #include "cpu.h"
+/*
+ * Esse arquivo está especificando somente as instruções em sua fase de execução:
+ * a busca e a decodificação são realizadas pela própria CPU em seu respectivo arquivo
+ */
 
 //instruções de 8 bits
 void hlt();
@@ -11,7 +15,7 @@ void str(CPU* cpu,unsigned char rX, unsigned char rY, Memoria* ram);
 void add(CPU* cpu,unsigned char rX, unsigned char rY);
 void sub(CPU* cpu,unsigned char rX, unsigned char rY);
 void mul(CPU* cpu,unsigned char rX, unsigned char rY);
-void div(CPU* cpu,unsigned char rX, unsigned char rY);
+void _div(CPU* cpu,unsigned char rX, unsigned char rY);
 void cmp(CPU* cpu,unsigned char rX, unsigned char rY);
 void movr(CPU* cpu,unsigned char rX, unsigned char rY);
 void and(CPU* cpu,unsigned char rX, unsigned char rY);

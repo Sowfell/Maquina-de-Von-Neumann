@@ -78,7 +78,7 @@ unsigned char codificarRegistrador(char* registrador){
    if(strcmp("r0",registrador)==0) return 0x0;
    if(strcmp("r1",registrador)==0) return 0x1;
    if(strcmp("r2",registrador)==0) return 0x2;
-   if(strcmp("r3",registrador)==0) return 0x;
+   if(strcmp("r3",registrador)==0) return 0x3;
    if(strcmp("r4",registrador)==0) return 0x4;
    if(strcmp("r5",registrador)==0) return 0x5;
    if(strcmp("r6",registrador)==0) return 0x6;

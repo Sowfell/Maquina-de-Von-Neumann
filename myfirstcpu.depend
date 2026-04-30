@@ -5,15 +5,23 @@
 	"cpu.h"
 	"memoria.h"
 
-1777216970 source:c:\users\davi\documents\000 - faculdade\1° período\laboratório de programação\estudando\myfirstcpu\cpu.c
+1777255245 source:c:\users\davi\documents\000 - faculdade\1° período\laboratório de programação\estudando\myfirstcpu\cpu.c
 	<stdlib.h>
 	"cpu.h"
 	"memoria.h"
 
-1777229515 c:\users\davi\documents\000 - faculdade\1° período\laboratório de programação\estudando\myfirstcpu\cpu.h
+1777513464 c:\users\davi\documents\000 - faculdade\1° período\laboratório de programação\estudando\myfirstcpu\cpu.h
 	"memoria.h"
 
 1777251253 c:\users\davi\documents\000 - faculdade\1° período\laboratório de programação\estudando\myfirstcpu\memoria.h
 
 1777217565 source:c:\users\davi\documents\000 - faculdade\1° período\laboratório de programação\estudando\myfirstcpu\instrucoes.c
+
+1777255261 source:c:\users\davi\documents\000 - faculdade\1° período\laboratório de programação\estudando\myfirstcpu\memoria.c
+	"memoria.h"
+	"cpu.h"
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<string.h>
 

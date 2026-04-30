@@ -43,16 +43,16 @@ struct cpu{
     unsigned short int imm; //16 bits
     unsigned short int pc; //16 bits, por padrão ele sempre vai começar apontando para o endereço 0x0
     unsigned char e, l, g; //8bits cada, são apenas flags de comparação
-    unsigned short int r0[4],r1[4],r2[4],r3[4],r4[4],r5[4],r6[4],r7[4]; // cada registrador possui 4 posições de 16bits
+    unsigned short int reg[8] //8 registradores de 16bits;
 };
 
 typedef struct cpu CPU;
 
 CPU* iniciar_cpu();
 void iniciar_programa(CPU* cpu,Memoria* ram);
-void buscar_instrucao(CPU* cpu,Memoria* ram);
-void ler_instrucao(CPU* cpu);
-void executar_instrucao(CPU* cpu);
+unsigned char buscar_instrucao(CPU* cpu,Memoria* ram);
+void decodificar_instrucao(CPU* cpu, unsigned char tamanho_instrucao);
+void executar_instrucao(CPU* cpu,Memoria* ram);
 
 
 #endif // CPU_H
