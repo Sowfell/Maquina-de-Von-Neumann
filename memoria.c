@@ -6,8 +6,13 @@
 #include <string.h>
 
 Memoria* iniciar_memoria(){
-
+    Memoria *memoria = (Memoria*)malloc(sizeof(memoria));
+    if(memoria != NULL)
+        for(int i=0; i<256; i++)
+            memoria->endereco[i] = 0;
+    return memoria;
 }
+
 void carregar_programa(Memoria* ram, char *caminho_programa){
     FILE *arquivo = fopen(caminho_programa, "r");
     if (arquivo == NULL) {

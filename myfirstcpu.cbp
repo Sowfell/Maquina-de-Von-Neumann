@@ -39,6 +39,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="instrucoes.h" />
+		<Unit filename="interface.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="interface.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>

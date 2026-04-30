@@ -25,34 +25,32 @@
 
 #define PRED CYAN BOLD ITALIC
 
-void output(CPU* cpu, Memoria* memoria ){
+void output(CPU* cpu, Memoria* memoria){
 
-    char protot[]="teste";
-    
     int x=45; // Parametro médio para espaçamento do print nos FORs
     printf(BOLD MAGENTA"| CPU\n"RESET);
     printf(BOLD MAGENTA" _"RESET);
     for(int i=0;i<x;i++) printf(BOLD MAGENTA"_"RESET);
-    printf(BOLD MAGENTA"\n|"); for(int i=0;i<x;i++) printf(HIDDEN" "RESET); printf(BOLD MAGENTA" |"RESET);
-    printf(BOLD MAGENTA"\n| "RESET PRED" R0:"RESET BLUE"  %X  "PRED"R1:"RESET BLUE"  %X  "PRED"R2:"RESET BLUE"  %X  "PRED"R3:"RESET BLUE"  %X"RESET MAGENTA BOLD"  |",cpu->reg[0],cpu->reg[1],cpu->reg[2],cpu->reg[3]);
-    printf(BOLD MAGENTA"\n| "RESET PRED" R4:"RESET BLUE"  %X  "PRED"R5:"RESET BLUE"  %X  "PRED"R6:"RESET BLUE"  %X  "PRED"R7:"RESET BLUE"  %X"RESET MAGENTA BOLD"  |",cpu->reg[4],cpu->reg[5],cpu->reg[6],cpu->reg[7]);
-    printf(BOLD MAGENTA"\n| "RESET PRED" MBR:"RESET BLUE" %X "PRED"MAR:"RESET BLUE" %X "PRED"IMM:"RESET BLUE" %X "PRED"PC:"RESET BLUE" %X"RESET MAGENTA BOLD"  |",cpu->mbr,cpu->mbr,cpu->imm,cpu->pc);
-    printf(BOLD MAGENTA"\n| "RESET PRED" IR:"RESET BLUE" %X        "PRED"RO0:"RESET BLUE" %X        "PRED"RO1:"RESET BLUE" %X "RESET MAGENTA BOLD" |\n",cpu->ir,cpu->ro0,cpu->ro1);
-    printf("|");
+        printf(BOLD MAGENTA"\n|"); for(int i=0;i<x;i++) printf(HIDDEN" "RESET); printf(BOLD MAGENTA" |"RESET);
+        printf(BOLD MAGENTA"\n| "RESET PRED" R0:"RESET BLUE"  %X  "PRED"R1:"RESET BLUE"  %X  "PRED"R2:"RESET BLUE"  %X  "PRED"R3:"RESET BLUE"  %X"RESET MAGENTA BOLD"  |",cpu->reg[0],cpu->reg[1],cpu->reg[2],cpu->reg[3]);
+        printf(BOLD MAGENTA"\n| "RESET PRED" R4:"RESET BLUE"  %X  "PRED"R5:"RESET BLUE"  %X  "PRED"R6:"RESET BLUE"  %X  "PRED"R7:"RESET BLUE"  %X"RESET MAGENTA BOLD"  |",cpu->reg[4],cpu->reg[5],cpu->reg[6],cpu->reg[7]);
+        printf(BOLD MAGENTA"\n| "RESET PRED" MBR:"RESET BLUE" %X "PRED"MAR:"RESET BLUE" %X "PRED"IMM:"RESET BLUE" %X "PRED"PC:"RESET BLUE" %X"RESET MAGENTA BOLD"  |",cpu->mbr,cpu->mbr,cpu->imm,cpu->pc);
+        printf(BOLD MAGENTA"\n| "RESET PRED" IR:"RESET BLUE" %X        "PRED"RO0:"RESET BLUE" %X        "PRED"RO1:"RESET BLUE" %X "RESET MAGENTA BOLD" |\n",cpu->ir,cpu->ro0,cpu->ro1);
+        printf("|");
     for(int i=0;i<x+1;i++) printf(BOLD MAGENTA"_"RESET);
-    printf(BOLD MAGENTA"|"RESET);
+        printf(BOLD MAGENTA"|"RESET);
 
 
 
-    printf("\n\n"BOLD MAGENTA"| MEMORIA:\n"RESET);
-    printf(BOLD MAGENTA" _"RESET);
+        printf("\n\n"BOLD MAGENTA"| MEMORIA:\n"RESET);
+        printf(BOLD MAGENTA" _"RESET);
     for(int i=0;i<x+8;i++) printf(BOLD MAGENTA"_"RESET);
-    printf(BOLD MAGENTA"\n|");
+        printf(BOLD MAGENTA"\n|");
     for(int i=0;i<x+9;i++) printf(" ");
-    printf(BOLD MAGENTA"|");
-    printf(BOLD MAGENTA"\n|     "RESET);
+        printf(BOLD MAGENTA"|");
+        printf(BOLD MAGENTA"\n|     "RESET);
     for(int i=0; i<16;i++) printf(CYAN BOLD ITALIC"0%X "RESET"",i);
-    printf(BOLD MAGENTA" |\n"RESET);
+        printf(BOLD MAGENTA" |\n"RESET);
     for(int i=0;i<16;i++){
         printf(BOLD MAGENTA"|  "RESET CYAN BOLD ITALIC"%X0"RESET"",i);
         for(int j=0;j<16;j++){
@@ -60,7 +58,7 @@ void output(CPU* cpu, Memoria* memoria ){
         }
         printf(BOLD MAGENTA"  |\n"BOLD MAGENTA);
     }
-    printf("|"); 
-    for(int i=0;i<x+9;i++) printf("_");
-    printf(BOLD MAGENTA"|\n"RESET RED UNDERLINE"\nFase Atual do Ciclo: %s\n\n"RESET"",protot);
+    printf("|");
+    for(int i=0;i<x+9;i++)
+        printf("_");
 }

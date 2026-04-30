@@ -7,39 +7,39 @@
  */
 
 //instruções de 8 bits
-void hlt();
-void nop(CPU* cpu);
+int hlt();
+void nop();
 //instruções de 16 bits
-void ldr(CPU* cpu,unsigned char rX, unsigned char rY, Memoria* ram);
-void str(CPU* cpu,unsigned char rX, unsigned char rY, Memoria* ram);
-void add(CPU* cpu,unsigned char rX, unsigned char rY);
-void sub(CPU* cpu,unsigned char rX, unsigned char rY);
-void mul(CPU* cpu,unsigned char rX, unsigned char rY);
-void _div(CPU* cpu,unsigned char rX, unsigned char rY);
-void cmp(CPU* cpu,unsigned char rX, unsigned char rY);
-void movr(CPU* cpu,unsigned char rX, unsigned char rY);
-void and(CPU* cpu,unsigned char rX, unsigned char rY);
-void or(CPU* cpu,unsigned char rX, unsigned char rY);
-void xor(CPU* cpu,unsigned char rX, unsigned char rY);
+void ldr(CPU* cpu, Memoria* ram);
+void str(CPU* cpu, Memoria* ram);
+void add(CPU* cpu);
+void sub(CPU* cpu);
+void mul(CPU* cpu);
+void _div(CPU* cpu);
+void cmp(CPU* cpu);
+void movr(CPU* cpu);
+void and(CPU* cpu);
+void or(CPU* cpu);
+void xor(CPU* cpu);
 //instrução de 8 bits
-void not(CPU* cpu,unsigned char rX, unsigned char rY);
+void not(CPU* cpu);
 //instruções de 24 bits
-void je(CPU* cpu, unsigned char endereco);
-void jne(CPU* cpu, unsigned char endereco);
-void jl(CPU* cpu, unsigned char endereco);
-void jle(CPU* cpu, unsigned char endereco);
-void jg(CPU* cpu, unsigned char endereco);
-void jge(CPU* cpu, unsigned char endereco);
-void jmp(CPU* cpu, unsigned char endereco);
+void je(CPU* cpu);
+void jne(CPU* cpu);
+void jl(CPU* cpu);
+void jle(CPU* cpu);
+void jg(CPU* cpu);
+void jge(CPU* cpu);
+void jmp(CPU* cpu);
 //instruções de 24 bits
-void ld(CPU* cpu, unsigned char rX, unsigned char endereco, Memoria* ram);
-void st(CPU* cpu, unsigned char rX, unsigned char endereco, Memoria* ram);
-void movi(CPU* cpu, unsigned char rX, unsigned char imm);
-void addi(CPU* cpu, unsigned char rX, unsigned char imm);
-void subi(CPU* cpu, unsigned char rX, unsigned char imm);
-void muli(CPU* cpu, unsigned char rX, unsigned char imm);
-void divi(CPU* cpu, unsigned char rX, unsigned char imm);
-void lsh(CPU* cpu, unsigned char rX, unsigned char imm);
-void rsh(CPU* cpu, unsigned char rX, unsigned char imm);
+void ld(CPU* cpu, Memoria* ram);
+void st(CPU* cpu, Memoria* ram);
+void movi(CPU* cpu);
+void addi(CPU* cpu);
+void subi(CPU* cpu);
+void muli(CPU* cpu);
+void divi(CPU* cpu);
+void lsh(CPU* cpu);
+void rsh(CPU* cpu);
 
 #endif
