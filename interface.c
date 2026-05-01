@@ -79,5 +79,6 @@ void output(CPU* cpu, Memoria* memoria){
     printf("|");
     for(int i=0;i<x+9;i++)
         printf("_");
-    printf("|\n"RESET);
+    printf("|\n\n"RESET);
+    printf(BOLD ITALIC GREEN"Pressione Enter para continuar os ciclos de execução e CTRL + C para finalizar o programa\n"RESET);
 }
