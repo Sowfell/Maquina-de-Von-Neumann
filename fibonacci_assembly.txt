@@ -1,0 +1,17 @@
+0;i;ld r4, fd			
+3;i;movi r5, 0			
+6;i;movi r0, 0			
+9;i;movi r1, 1
+c;i;add r0, r1			
+e;i;st r0, fe
+11;i;addi r5, 1		
+14;i;cmp r5, r4
+16;i;jge 38				
+19;i;add r1, r0
+1b;i;st r1, fe
+1e;i;addi r5, 1
+21;i;cmp r5, r4
+23;i;jl 12
+26;i;hlt
+fc;d;0
+fd;d;18
