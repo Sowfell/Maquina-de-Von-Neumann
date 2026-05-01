@@ -6,45 +6,45 @@
 #include <string.h>
 
 Memoria* iniciar_memoria(){
-    Memoria *memoria = (Memoria*)malloc(sizeof(memoria));
+    Memoria *memoria = (Memoria*)malloc(sizeof(Memoria));
     if(memoria != NULL)
         for(int i=0; i<256; i++)
             memoria->endereco[i] = 0;
     return memoria;
 }
-
-void carregar_programa(Memoria* ram, char *caminho_programa){
-    FILE *arquivo = fopen(caminho_programa, "r");
-    if (arquivo == NULL) {
-        perror("Erro ao abrir o programa");
-    }
-
-    char linha[256]; // buffer para armazenar a linha
-
-    while (fgets(linha, sizeof(linha), arquivo) != NULL) {
-        //Separação da String
-        char endereco[4];
-        char tipo;
-        char informacao[20];
-        int count=0;
-        for(int i=0;linha[count]!=';';i++,count++){
-            endereco[i]=linha[i];
-            endereco[i+1] = '\0';
-        }
-        count++;
-        tipo=linha[count];
-        count+=2;
-        for(int i=0;linha[count]!='\n';i++,count++){
-            informacao[i]=linha[count];
-            informacao[i+1] = '\0';
-        }
-        //conversão para valores numéricos
-        unsigned int end=(unsigned int)strtol(endereco,NULL,16);
-        printf("%x\n",end);
-    }
-    fclose(arquivo);
-}
-
+//
+//void carregar_programa(Memoria* ram, char *caminho_programa){
+//    FILE *arquivo = fopen(caminho_programa, "r");
+//    if (arquivo == NULL) {
+//        perror("Erro ao abrir o programa");
+//    }
+//
+//    char linha[256]; // buffer para armazenar a linha
+//
+//    while (fgets(linha, sizeof(linha), arquivo) != NULL) {
+//        //Separaï¿½ï¿½o da String
+//        char endereco[4];
+//        char tipo;
+//        char informacao[20];
+//        int count=0;
+//        for(int i=0;linha[count]!=';';i++,count++){
+//            endereco[i]=linha[i];
+//            endereco[i+1] = '\0';
+//        }
+//        count++;
+//        tipo=linha[count];
+//        count+=2;
+//        for(int i=0;linha[count]!='\n';i++,count++){
+//            informacao[i]=linha[count];
+//            informacao[i+1] = '\0';
+//        }
+//        //conversï¿½o para valores numï¿½ricos
+//        unsigned int end=(unsigned int)strtol(endereco,NULL,16);
+//        printf("%x\n",end);
+//    }
+//    fclose(arquivo);
+//}
+//
 
 unsigned char codificarInstrucao(char* ins){
    if(strcmp("hlt",ins)==0) return HLT;
@@ -97,24 +97,22 @@ void ler(char* path,Memoria* ram){
         printf("Erro ao abrir o programa\n");
         exit(1);
     }
-
-    unsigned char tamanhoBytes = 1;
-    unsigned int endereco = 0;
-    unsigned char tipo;
-    unsigned char opcode;
-    unsigned char rX;
-    unsigned char rY;
-    unsigned char z;
-    unsigned char imm;
-
     char buffer[256];
 
     while(fgets(buffer,sizeof(buffer),arquivo)!=NULL){
-        char* token = strtok(buffer,"; ,");
-        int count = 0;
-        endereco = (unsigned int)strtol(token,NULL,16);
+         unsigned char tamanhoBytes = 1;
+         unsigned int endereco = 0;
+         unsigned char tipo=0;
+         unsigned char opcode=0;
+         unsigned char rX=0;
+         unsigned char rY=0;
+         unsigned int z=0;
+         unsigned char imm=0;
 
-        while(token!=NULL && count<5){ //Se por acaso for mais de 5 tokens, mude AQUI count<X
+         char* token = strtok(buffer,"; ,");
+         int count = 0;
+         endereco = (unsigned int)strtol(token,NULL,16);
+         while(token!=NULL && count<5){ //Se por acaso for mais de 5 tokens, mude AQUI count<X
             token=strtok(NULL,", ;\n");
             count++;
             switch(count){
@@ -126,45 +124,63 @@ void ler(char* path,Memoria* ram){
                     ram->endereco[endereco] = (unsigned int)strtol(token,NULL,16) >> 8;
                     ram->endereco[endereco+1] = (unsigned int)strtol(token,NULL,16) & 0b0000000011111111;
                 }
-
                 else if(tipo == 'i'){
                     opcode = codificarInstrucao(token);
                 }
+
                 break;
             case 3:
-                if(opcode <= 1) // instruções sem registradores, endereços, etc.
+                if(opcode <= 0x01)                          // hlt, nop
+                {
                     break;
-
-                else if(opcode <= 12) //instruções com 2 registradores
+                }
+                else if(opcode <= 0x0C)                     // 2 registradores
+                {
                     rX = codificarRegistrador(token);
-
-                else if(opcode == 13) //instrução com 1 registrador
+                }
+                else if(opcode == 0x0D)                     // not
+                {
                     rX = codificarRegistrador(token);
-
-                else if(opcode <= 20) //instrução com 1 endereço de memória
-                    z = (unsigned char)strtol(token,NULL,16);
-
-                else if(opcode <= 22) //instrução com 1 registrador e 1 endereço de memória
+                }
+                else if(opcode <= 0x14)                     // saltos (1 endereÃ§o)
+                    z = (unsigned char)strtol(token, NULL, 16);
+                else if(opcode <= 0x16)                     // ld, st (registrador + endereÃ§o)
                     rX = codificarRegistrador(token);
-
-                else if(opcode <= 29) //instrução com 1 registrador e 1 imediato
+                else if(opcode <= 0x1D)                     // imediatos
                     rX = codificarRegistrador(token);
-
+                  break;
             case 4:
-                if(opcode >= 1 && opcode <= 12) //instruções com 2 registradores
-                    rY = codificarRegistrador(token);
-
-                else if(opcode > 20 && opcode <= 22) //instrução com 1 registrador e 1 endereço de memória
-                    z = (unsigned char)strtol(token,NULL,16);
-
-                else if(opcode <= 29) //instrução com 1 registrador e 1 imediato
-                    imm = (unsigned char)strtol(token,NULL,16);
-                break;
-
-            default:
-                break;
-            }
+    if(opcode <= 0x0C)                              // 2 registradores
+        rY = codificarRegistrador(token);
+    else if(opcode == 0x15 || opcode == 0x16){      // ld, st (endereÃ§o)
+        z = (unsigned char)strtol(token, NULL, 16);
+        printf("z = %X\n", z);
+    }
+    else if(opcode >= 0x17 && opcode <= 0x1D)       // imediatos
+        imm = (unsigned char)strtol(token, NULL, 16);
+    break;
+default:
+    break;
+}
         }
+        if(tipo == 'i'){
+    unsigned int palavra = 0;
+
+    if(opcode <= 0x01)                              // hlt, nop
+        palavra = opcode << 19;
+    else if(opcode <= 0x0D)                         // 2 registradores ou not
+        palavra = (opcode << 19) | (rX << 16) | (rY << 13);
+    else if(opcode <= 0x14)                         // saltos
+        palavra = (opcode << 19) | z;
+    else if(opcode <= 0x16)                         // ld, st
+        palavra = (opcode << 19) | (rX << 16) | z;
+    else                                            // imediatos
+        palavra = (opcode << 19) | (rX << 16) | imm;
+
+    ram->endereco[endereco]   = (palavra >> 16) & 0xFF;
+    ram->endereco[endereco+1] = (palavra >> 8)  & 0xFF;
+    ram->endereco[endereco+2] =  palavra        & 0xFF;
+}
     }
 
 }

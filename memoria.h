@@ -8,6 +8,6 @@ struct memoria{
 typedef struct memoria Memoria;
 
 Memoria* iniciar_memoria();
-void carregar_programa(Memoria* ram,char *caminho_programa);
+void ler(char* path,Memoria* ram);
 
 #endif // MEMORIA_H

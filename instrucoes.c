@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-//instruções de 8 bits
+//instruï¿½ï¿½es de 8 bits
 int hlt(){
     return 0;
 }
@@ -12,7 +12,7 @@ void nop(){
     return;
 }
 
-//instruções de 16 bits
+//instruï¿½ï¿½es de 16 bits
 
 void ldr(CPU* cpu, Memoria* ram){
     if(cpu==NULL || ram==NULL )
@@ -101,14 +101,14 @@ void xor(CPU* cpu){
     cpu->reg[cpu->ro0] = cpu->reg[cpu->ro0] ^ cpu->reg[cpu->ro1];
 }
 
-//instrução de 8 bits
+//instruï¿½ï¿½o de 8 bits
 void not(CPU* cpu){
     if(cpu==NULL)
         return;
     cpu->reg[cpu->ro0] = !cpu->reg[cpu->ro0];
 }
 
-//instruções de 24 bits
+//instruï¿½ï¿½es de 24 bits
 void je(CPU* cpu){
     if(cpu == NULL)
         return;
@@ -157,11 +157,11 @@ void jmp(CPU* cpu){
     cpu->pc = cpu->mar;
 }
 
-//instruções de 24 bits
+//instruï¿½ï¿½es de 24 bits
 void ld(CPU* cpu, Memoria* ram){
     if(cpu==NULL || ram==NULL )
         return;
-    //MAR já está com o endereço correto, isso foi realizado na etapa de decodificação
+    //MAR jï¿½ estï¿½ com o endereï¿½o correto, isso foi realizado na etapa de decodificaï¿½ï¿½o
     cpu->mbr = ram->endereco[cpu->mar];
     cpu->mar++;
     cpu->mbr = (cpu->mbr << 8)|ram->endereco[cpu->mar];
@@ -171,7 +171,7 @@ void ld(CPU* cpu, Memoria* ram){
 void st(CPU* cpu, Memoria* ram){
     if(cpu==NULL || ram==NULL )
         return;
-    //MAR já está com o endereço correto, isso foi realizado na etapa de decodificação
+    //MAR jï¿½ estï¿½ com o endereï¿½o correto, isso foi realizado na etapa de decodificaï¿½ï¿½o
     cpu->mbr = cpu->reg[cpu->ro0];
     ram->endereco[cpu->mar] = cpu->mbr >> 8;
     cpu->mar++;

@@ -36,13 +36,13 @@ enum opcodes{
 };
 
 struct cpu{
-    unsigned int mbr; //32 bits no total; Serão usados somente 24bits
+    unsigned int mbr; //32 bits no total; Serï¿½o usados somente 24bits
     unsigned short int mar; //16 bits
     unsigned char ir; //8bits
     unsigned char ro0,ro1; //8bits
     unsigned short int imm; //16 bits
-    unsigned short int pc; //16 bits, por padrão ele sempre vai começar apontando para o endereço 0x0
-    unsigned char e, l, g; //8bits cada, são apenas flags de comparação
+    unsigned short int pc; //16 bits, por padrï¿½o ele sempre vai comeï¿½ar apontando para o endereï¿½o 0x0
+    unsigned char e, l, g; //8bits cada, sï¿½o apenas flags de comparaï¿½ï¿½o
     unsigned short int reg[8]; //8 registradores de 16bits;
 };
 

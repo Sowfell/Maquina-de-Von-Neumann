@@ -5,13 +5,13 @@
 #include "interface.h"
 
 int main() {
-    int *controle_programa = 0;
+    int teste = 1;
+    int *controle_programa = &teste;
     CPU *cpu = iniciar_cpu();
     Memoria *ram = iniciar_memoria();
-    iniciar_programa(cpu,ram,controle_programa);
-
     output(cpu,ram);
-
-
+    ler("fibonacci_assembly.txt",ram);
+    iniciar_programa(cpu,ram,controle_programa);
+    
     return 0;
 }

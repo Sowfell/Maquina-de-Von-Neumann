@@ -1,27 +1,22 @@
 Cálculo iterativo da sequência de Fibonacci com tamanho definido em um valor de 16 bits armazenado em 0xFC e 0xFD.
 O resultado de 16 bits deve ser armazenado em 0xFE e 0xFF.
 
-0;i;ld r4, fd				#definindo o valor máximo de iterações que podem ser realizadas
-3;i;movi r5, 0				#definindo o contador para controlar a iteração
+0;i;ld r4, fc               -> Carrega o endereço fc no registrador r4
+3;i;movi r5, 0              -> Quantidade de iterações
 
-6;i;movi r0, 0				#inicializando a sequência
-9;i;movi r1, 1
+6;i;movi r0, 0              -> Valor inicial da sequencia (0 e 1)
+9;i;movi r1, 1              
 
-c;i;add r0, r1				#novo elemento da sequência
-e;i;st r0, fe
-11;i;addi r5, 1				#incremento do contador
-14;i;cmp r5, r4
-16;i;jge 38					#Para a execução caso atinja o máximo e pula pro fim do programa
+c;i;add r0, r1              
+e;i;st r0, fe               -> Armazenando resultado em FE e FF
 
-19;i;add r1, r0				#inverte a ordem dos operandos, soma o novo elemento da sequência
-1b;i;st r1, fe
-1e;i;addi r5, 1				#incremento do contador
-21;i;cmp r5, r4
-23;i;jl 12					#Volta para a primeira parte do código onde se realiza as adições
-
-26;i;hlt
-
-fc;d;0						#um total de 24 iterações podem ser realizadas, mais iterações que isso resultam em overflow aritmético
-fd;d;18						#valor máximo que será alcançado é de 46368 em decimal --> 0xB520; 
-
-#0x18 = 24 iterações totais
+11;i;addi r5, 1             -> Incrementando contador
+14;i;cmp r5, r4             
+16;i;jge 26                 -> Jump para halt
+19;i;add r1, r0             
+1b;i;st r1, fe              -> Armazenando próximo elemento
+1e;i;addi r5, 1             
+21;i;cmp r5, r4             
+23;i;jl c                   -> Próxima iteração
+26;i;hlt                    
+fc;d;17                     

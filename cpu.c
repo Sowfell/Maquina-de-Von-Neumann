@@ -3,11 +3,12 @@
 #include "cpu.h"
 #include "memoria.h"
 #include "instrucoes.h"
+#include "interface.h"
 
-//Esse é um vetor que serve para indicar quantos bytes são necessários buscar
-//da memória de acordo com cada instrução, cada posição do vetor equivale à uma
-//instrução do conjunto completo, de modo que já estão na ordem correta. Ou seja, por exemplo
-//hlt que tem opcode 0b00000 equivale a posição 1, nop que tem 0b00001 está na posição 2, e assim por diante
+//Esse ï¿½ um vetor que serve para indicar quantos bytes sï¿½o necessï¿½rios buscar
+//da memï¿½ria de acordo com cada instruï¿½ï¿½o, cada posiï¿½ï¿½o do vetor equivale ï¿½ uma
+//instruï¿½ï¿½o do conjunto completo, de modo que jï¿½ estï¿½o na ordem correta. Ou seja, por exemplo
+//hlt que tem opcode 0b00000 equivale a posiï¿½ï¿½o 1, nop que tem 0b00001 estï¿½ na posiï¿½ï¿½o 2, e assim por diante
 
 unsigned char tamanho_opcodes[30] = {1,1, //hlt .. nop
                                      2,2,2,2,2,2,2,2,2,2,2, //ldr ... xor
@@ -15,7 +16,7 @@ unsigned char tamanho_opcodes[30] = {1,1, //hlt .. nop
                                      3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3}; //je .. rsh
 
 CPU* iniciar_cpu(){
-    CPU *cpu = (CPU*)malloc(sizeof(cpu));
+    CPU *cpu = (CPU*)malloc(sizeof(CPU));
     if(cpu != NULL){
         cpu->pc = 0;
     }
@@ -37,71 +38,72 @@ void iniciar_programa(CPU* cpu,Memoria* ram,int *controle_ciclo){
             decodificar_instrucao(cpu, t_instrucao);
             programa_executando = executar_instrucao(cpu,ram);
             *proximo_ciclo = 0;
+            output(cpu,ram);
         }
-        scanf(" %c", &confirmar_proximo_ciclo);
+        confirmar_proximo_ciclo = getchar();
         if(confirmar_proximo_ciclo == '\n')
             *proximo_ciclo = 1;
         confirmar_proximo_ciclo = '0';
     }
 }
 
-unsigned char buscar_instrucao(CPU* cpu,Memoria* ram){ //A busca também faz uma pré-decodificação
+unsigned char buscar_instrucao(CPU* cpu,Memoria* ram){ //A busca tambï¿½m faz uma prï¿½-decodificaï¿½ï¿½o
     if(cpu == NULL || ram == NULL)              //que apenas analisa quantos bytes ainda devem ser buscados
         return 0;
     cpu->mar = cpu->pc;
-    cpu->mbr = ram->endereco[cpu->mar]; //Pega o Opcode da instrução
+    cpu->mbr = ram->endereco[cpu->mar]; //Pega o Opcode da instruï¿½ï¿½o
     cpu->ir = cpu->mbr >> 3;
 
-    //Não é preciso verificar se a instrução tem somente 1 byte, se esse for o caso
-    //a busca já está completa
+    //Nï¿½o ï¿½ preciso verificar se a instruï¿½ï¿½o tem somente 1 byte, se esse for o caso
+    //a busca jï¿½ estï¿½ completa
     if(tamanho_opcodes[cpu->ir] < 1 || tamanho_opcodes[cpu->ir] > 3){
         perror("Erro de codificao de instrucao, opcode invalido");
-        return 0; //Só uma verificação de segurança
+        return 0; //Sï¿½ uma verificaï¿½ï¿½o de seguranï¿½a
     }
 
     cpu->pc++;
-    if(tamanho_opcodes[cpu->ir] >= 2){ //instruções de 2 bytes
+    if(tamanho_opcodes[cpu->ir] >= 2){ //instruï¿½ï¿½es de 2 bytes
         cpu->mar = cpu->pc;
         cpu->mbr = (cpu->mbr << 8) | ram->endereco[cpu->mar];
         cpu->pc++;
 
-        if(tamanho_opcodes[cpu->ir] == 3){ //instruções de 3 bytes
+        if(tamanho_opcodes[cpu->ir] == 3){ //instruï¿½ï¿½es de 3 bytes
             cpu->mar = cpu->pc;
             cpu->mbr = (cpu->mbr << 8) | ram->endereco[cpu->mar];
             cpu->pc++;
         }
 
     }
-    cpu->mbr = cpu->mbr & 0b00000000111111111111111111111111; //Limpeza somente para garantir que o MBR esteja usando só seus  24 bits
+    cpu->mbr = cpu->mbr & 0b00000000111111111111111111111111; //Limpeza somente para garantir que o MBR esteja usando sï¿½ seus  24 bits
     return(tamanho_opcodes[cpu->ir]);
 }
 
-void decodificar_instrucao(CPU* cpu, unsigned char tamanho_instrucao){ //Decodificação específica das instruções,
-    if(cpu == NULL)                                                 //o objetivo principal aqui é modificar os registradores necessários
-        return;                                                 //e preparar para a correta fase de EXECUÇÃO
+void decodificar_instrucao(CPU* cpu, unsigned char tamanho_instrucao){ //Decodificaï¿½ï¿½o especï¿½fica das instruï¿½ï¿½es,
+    if(cpu == NULL)                                                 //o objetivo principal aqui ï¿½ modificar os registradores necessï¿½rios
+        return;                                                 //e preparar para a correta fase de EXECUï¿½ï¿½O
     switch(tamanho_instrucao){
     case 1: //Se encaixam aqui somente hlt,nop, e not
-        if(cpu->ir == NOT) //Apenas a instrução not necessita de algum outro registrador
+        if(cpu->ir == NOT) //Apenas a instruï¿½ï¿½o not necessita de algum outro registrador
         cpu->ro0 = cpu->mbr & 0b00000111;
         break;
 
-    case 2: //Todas as instruções de aritmética entre dois registradores gerais
-            //ou operações lógicas (Exceto not, que é unária) --> ldr .. xor
+    case 2: //Todas as instruï¿½ï¿½es de aritmï¿½tica entre dois registradores gerais
+            //ou operaï¿½ï¿½es lï¿½gicas (Exceto not, que ï¿½ unï¿½ria) --> ldr .. xor
         cpu->ro0 = (cpu->mbr >> 8) & 0b00000111;
         cpu->ro1 = (cpu->mbr >> 5) & 0b00000111;
         break;
 
 
-    case 3: //Todas as instruções de aritmética entre um registrador geral e um imediato
-            //ou as operações de load e store ou então as instruções de jumps.
+    case 3: //Todas as instruï¿½ï¿½es de aritmï¿½tica entre um registrador geral e um imediato
+            //ou as operaï¿½ï¿½es de load e store ou entï¿½o as instruï¿½ï¿½es de jumps.
         if(cpu->ir <= JMP){ //IR possui um opcode de algum dos jumps
             cpu->mar = cpu->mbr;
         }else{
             cpu->ro0 = (cpu->mbr >> 16) & 0b00000111;
             if(cpu->ir <= ST)//IR possui ou o opcode do store ou do load
-                cpu->mar = cpu->mbr;
-            else //IR possui um opcode de operação aritmética com imediato
-                cpu->imm = cpu->mbr;
+                cpu->mar = cpu->mbr & 0x0000FFFF;
+            else //IR possui um opcode de operaï¿½ï¿½o aritmï¿½tica com imediato
+                cpu->imm = cpu->mbr & 0x0000FFFF;
         }
     }
 }
@@ -117,7 +119,7 @@ int executar_instrucao(CPU* cpu,Memoria* ram){
         break;
 
     case NOP:
-        nop(cpu,ram);
+        nop();
         break;
 
     case LDR:
