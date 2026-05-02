@@ -26,7 +26,6 @@ CPU* iniciar_cpu(){
 void iniciar_programa(CPU* cpu,Memoria* ram,int *controle_ciclo){
     if(cpu == NULL || ram == NULL)
         return;
-
     unsigned char t_instrucao = 0;
     int programa_executando = 1;
     int *proximo_ciclo = controle_ciclo;
@@ -34,11 +33,11 @@ void iniciar_programa(CPU* cpu,Memoria* ram,int *controle_ciclo){
 
     while(programa_executando){
         if(*proximo_ciclo){
+            output(cpu,ram);
             t_instrucao = buscar_instrucao(cpu,ram);
             decodificar_instrucao(cpu, t_instrucao);
             programa_executando = executar_instrucao(cpu,ram);
             *proximo_ciclo = 0;
-            output(cpu,ram);
         }
         confirmar_proximo_ciclo = getchar();
         if(confirmar_proximo_ciclo == '\n')
